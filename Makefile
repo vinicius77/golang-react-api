@@ -9,3 +9,6 @@ yarn create vite client -- --template react-ts
 
 # Install dependencies
 yarn add @mantine/hooks @mantine/core swr @primer/octicons-react
+
+# Run the server
+go run main go
