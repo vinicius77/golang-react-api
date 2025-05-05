@@ -6,6 +6,8 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+
 type Fields = {
   email: string;
   password: string;
@@ -58,6 +60,17 @@ const SignUpWithEmail: React.FC = () => {
     }
   };
 
+  const onGoogleLoginHandler = () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((res) => {
+        const { user = {} } = res;
+        console.log({ user, res });
+      })
+      .catch((error) => console.error({ error }));
+  };
+
   return (
     <section className="login-form">
       <h3>Log into your account</h3>
@@ -85,6 +98,10 @@ const SignUpWithEmail: React.FC = () => {
           <button onClick={onSubmitHandler}>Login</button>
         </div>
       </form>
+
+      <button type="button" onClick={onGoogleLoginHandler}>
+        Login With Google
+      </button>
     </section>
   );
 };
