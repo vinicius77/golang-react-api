@@ -1,0 +1,14 @@
+services:
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: firebase-authentication-app
+    ports:
+      - 3306:3306
+volumes:
+  mysqldata:
+    driver: local
