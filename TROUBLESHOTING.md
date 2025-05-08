@@ -118,3 +118,19 @@ mysql> DESCRIBE users;
 | deleted_at | timestamp    | YES  |     | NULL              |                   |
 +------------+-----------
 ```
+
+#### Setup Github OAuth
+
+[Set Up Firebase Authentication With React and Go](https://readmedium.com/firebase-authentication-with-react-and-go-3784f91fa760)
+
+Although the blog above is useful, there is a lot of not well explained things:
+
+- [GitHub](https://github.com/settings/applications/2993948)
+  **Aplication name:** whatever you want to
+  **Home Page URL:** client URL (i.e. `http://localhost:5173/` Vite)
+  **Authorization callback URL:** autofills with firebase auth redirect (i.e. `https://.<your-project>.firebaseapp.com/__/auth/handler`)
+
+The process above create the `Client ID`, so you need to generate `Client secret` and set up both on:
+
+[Firebase](https://console.firebase.google.com) `Console > Authentication > Sign-in Method > Add New Provider > GitHub`
+`
