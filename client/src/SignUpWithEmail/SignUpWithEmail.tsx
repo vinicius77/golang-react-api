@@ -4,9 +4,11 @@ import { auth } from "../utils/firebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  GithubAuthProvider,
 } from "firebase/auth";
-
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 type Fields = {
   email: string;
@@ -71,6 +73,17 @@ const SignUpWithEmail: React.FC = () => {
       .catch((error) => console.error({ error }));
   };
 
+  const onGitHubLoginHandler = () => {
+    const provider = new GithubAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then((res) => {
+        const { user = {} } = res;
+        console.log({ user, res });
+      })
+      .catch((error) => console.error({ error }));
+  };
+
   return (
     <section className="login-form">
       <h3>Log into your account</h3>
@@ -101,6 +114,10 @@ const SignUpWithEmail: React.FC = () => {
 
       <button type="button" onClick={onGoogleLoginHandler}>
         Login With Google
+      </button>
+
+      <button type="button" onClick={onGitHubLoginHandler}>
+        Login With Github
       </button>
     </section>
   );
