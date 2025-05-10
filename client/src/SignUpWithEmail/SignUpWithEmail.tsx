@@ -1,14 +1,16 @@
 import { useState, SyntheticEvent } from "react";
+import { useContext } from "react";
 
 import { auth } from "../utils/firebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  getAuth,
   signInWithPopup,
   GithubAuthProvider,
 } from "firebase/auth";
+import useLogout from "../hooks/useLogout";
+import { AuthContext } from "../contexts/AuthContext";
 
 type Fields = {
   email: string;
@@ -20,17 +22,15 @@ const initialState = {
   password: "",
 } as Fields;
 
-type User = {
-  id: string;
-  uuid: string;
-  name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
-};
-
 const SignUpWithEmail: React.FC = () => {
+  const { logout } = useLogout();
+  const authContext = useContext(AuthContext);
+
+  if (!authContext) {
+    throw new Error("AuthContext must be used within an AuthContextProvider");
+  }
+  const { dispatch } = authContext;
+
   const [fields, setFields] = useState<Fields>(initialState);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +41,7 @@ const SignUpWithEmail: React.FC = () => {
 
   const onSubmitHandler = async (e: SyntheticEvent) => {
     e.preventDefault();
+
     const { email, password } = fields;
 
     if (!email || !password) {
@@ -54,17 +55,23 @@ const SignUpWithEmail: React.FC = () => {
         password
       );
 
+      if (!result) {
+        throw new Error("Could not complete signup");
+      }
+
+      const user = result.user;
+      dispatch({ type: "LOGIN", payload: user });
+
       console.log({ result });
 
       setFields(initialState);
     } catch (error) {
-      console.error(error);
+      throw new Error("Could not complete signup");
     }
   };
 
   const onGoogleLoginHandler = () => {
     const provider = new GoogleAuthProvider();
-    const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((res) => {
         const { user = {} } = res;
@@ -75,13 +82,17 @@ const SignUpWithEmail: React.FC = () => {
 
   const onGitHubLoginHandler = () => {
     const provider = new GithubAuthProvider();
-    const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((res) => {
         const { user = {} } = res;
         console.log({ user, res });
       })
       .catch((error) => console.error({ error }));
+  };
+
+  const onLogout = async () => {
+    await logout();
+    dispatch({ type: "LOGOUT", payload: null });
   };
 
   return (
@@ -118,6 +129,10 @@ const SignUpWithEmail: React.FC = () => {
 
       <button type="button" onClick={onGitHubLoginHandler}>
         Login With Github
+      </button>
+
+      <button className="btn" onClick={onLogout}>
+        Log Out
       </button>
     </section>
   );
