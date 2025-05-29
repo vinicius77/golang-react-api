@@ -2,13 +2,19 @@ import { type UserCredential } from "firebase/auth";
 
 type AuthAction = "LOGIN" | "LOGOUT" | "AUTH_IS_READY";
 
+export interface BackendUser {
+  uid: string;
+  email?: string;
+  displayName?: string;
+}
+
 export interface IAction {
   type: AuthAction;
-  payload: UserCredential["user"] | null;
+  payload: UserCredential["user"] | BackendUser | null;
 }
 
 export interface IAuthState {
-  user: UserCredential["user"] | null;
+  user: UserCredential["user"] | BackendUser | null;
   authIsReady: boolean;
 }
 
