@@ -17,18 +17,24 @@ func NewAuthMiddleware(authService *service.AuthService) *AuthMiddleware {
 
 func (middleware *AuthMiddleware) Authentication() fiber.Handler {
 	return func(c *fiber.Ctx) error {
+		var tokenString string
 		authHeader := c.Get("Authorization")
 
-		if authHeader == "" {
-			return c.Status(fiber.StatusUnauthorized).SendString("authorization header is empty")
+		if authHeader != "" {
+			tokenParts := strings.Split(authHeader, " ")
+			if len(tokenParts) != 2 || tokenParts[0] != "Bearer" {
+				return c.Status(fiber.StatusUnauthorized).SendString("authorization header format is invalid")
+			}
+			tokenString = tokenParts[1]
+		} else {
+			// Fallback to cookie
+			tokenString = c.Cookies("session")
+			if tokenString == "" {
+				return c.Status(fiber.StatusUnauthorized).SendString("no token provided")
+			}
 		}
 
-		tokenParts := strings.Split(authHeader, " ")
-		if len(tokenParts) != 2 || tokenParts[0] != "Bearer" {
-			return c.Status(fiber.StatusUnauthorized).SendString("authorization header format is invalid")
-		}
-
-		decodedToken, err := middleware.authService.VerifyToken(c.Context(), tokenParts[1])
+		decodedToken, err := middleware.authService.VerifyToken(c.Context(), tokenString)
 		if err != nil {
 			return c.Status(fiber.StatusUnauthorized).SendString("invalid token")
 		}
