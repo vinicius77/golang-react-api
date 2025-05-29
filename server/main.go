@@ -50,16 +50,21 @@ func main() {
 		return api.CreateUser(c, db)
 	})
 
-	// Protected routes with a subrouter
-	protectedRouter := app.Group("/api", cors.New(cors.Config{
-		AllowOrigins:     "*",
+	corsMiddleware := cors.New(cors.Config{
+		AllowOrigins:     "http://localhost:5173",
 		AllowMethods:     "GET,POST,OPTIONS",
 		AllowHeaders:     "Accept,Content-Type,X-Request-With,Authorization",
 		ExposeHeaders:    "Content-Length,Content-Type",
 		AllowCredentials: true,
 		MaxAge:           300,
-	}), authMiddleware.Authentication())
+	})
+
+	app.Post("/api/login", corsMiddleware, authHandler.SessionLogic)
+
+	// Protected routes with a subrouter
+	protectedRouter := app.Group("/api", corsMiddleware, authMiddleware.Authentication())
 	protectedRouter.Get("/profile", authHandler.GetProfile)
+	protectedRouter.Post("/logout", authHandler.Logout)
 
 	logFatal(app.Listen(":4000"))
 }
