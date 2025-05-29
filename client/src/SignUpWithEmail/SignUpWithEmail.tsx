@@ -70,14 +70,19 @@ const SignUpWithEmail: React.FC = () => {
     }
   };
 
-  const onGoogleLoginHandler = () => {
+  const onGoogleLoginHandler = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((res) => {
-        const { user = {} } = res;
-        console.log({ user, res });
-      })
-      .catch((error) => console.error({ error }));
+    const result = await signInWithPopup(auth, provider);
+    const idToken = await result.user.getIdToken();
+
+    await fetch("http://localhost:4000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // important to include cookies
+      body: JSON.stringify({ idToken }),
+    });
   };
 
   const onGitHubLoginHandler = () => {
@@ -92,7 +97,15 @@ const SignUpWithEmail: React.FC = () => {
 
   const onLogout = async () => {
     await logout();
+
+    await fetch("http://localhost:4000/api/logout", {
+      method: "POST",
+      credentials: "include", // Include cookie for backend to clear it
+    });
+
     dispatch({ type: "LOGOUT", payload: null });
+
+    // TODO: navigate("/login"); // or reset your app state
   };
 
   return (
