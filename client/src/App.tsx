@@ -6,8 +6,9 @@ import PublicRoute from "@/routes/PublicRoute";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
+import NotFound from "@/pages/NotFound";
 
-import "./App.css";
+import "@/App.css";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Home />} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
