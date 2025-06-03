@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import ProtectedRoute from "@/routes/ProtectedRoute"
 import PublicRoute from "@/routes/PublicRoute"
 
-import TopNavbar from "@/components/commons/SignUpWithEmail/TopNavBar"
+import TopNavbar from "@/components/commons/TopNavBar"
 
 import Home from "@/pages/Home"
 import Login from "@/pages/Login"
