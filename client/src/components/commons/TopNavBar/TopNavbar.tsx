@@ -8,7 +8,7 @@ import BellIcon from "@/icons/bell.svg?react"
 import Plus from "@/icons/plus.svg?react"
 import Caret from "@/icons/caret.svg?react"
 
-import { AuthContext } from "@/contexts/AuthContext"
+import { AuthContext } from "@/contexts/auth-context"
 
 import "./Topbar.css"
 
