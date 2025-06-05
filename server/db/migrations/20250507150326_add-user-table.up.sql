@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS users (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT NULL,
+  `deleted_at` TIMESTAMP NULL DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+
+  PRIMARY KEY(id),
+  UNIQUE KEY (uuid)
+)

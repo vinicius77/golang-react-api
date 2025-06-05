@@ -1,0 +1,7 @@
+POST   http://localhost:4000/v1/users HTTP/1.1
+content-type: application/json
+
+{
+    "email": "vinicius.bonifacio1985@gmail.com",
+    "uuid": "ibtVRzhc4LWT51HhSZvzlrdX52Q2" 
+}
