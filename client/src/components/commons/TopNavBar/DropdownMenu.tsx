@@ -8,6 +8,7 @@ import Chevron from "@/icons/chevron.svg?react"
 import Cog from "@/icons/cog.svg?react"
 
 import { CSSTransition } from "react-transition-group"
+import Logout from "../Logout"
 
 function DropdownMenu() {
   const [activeMenu, setActiveMenu] = useState("main")
@@ -30,6 +31,9 @@ function DropdownMenu() {
           <DropdownItem leftIcon="🦧" onClick={setActiveMenu}>
             My Profile
           </DropdownItem>
+
+          <Logout />
+
           <DropdownItem
             onClick={setActiveMenu}
             leftIcon={<Cog />}
