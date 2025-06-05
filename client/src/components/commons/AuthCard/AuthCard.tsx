@@ -4,18 +4,15 @@ import AuthCardFooter from "@/components/commons/AuthCard/AuthCardFooter"
 
 import "./AuthCard.css"
 
-export type AuthMode = "login" | "register"
+export type AuthMode = "Login" | "Register"
 export type ProviderOpts = "Google" | "Github"
 
 interface AuthCardProps {
-  mode: AuthMode
+  title: AuthMode
   children: React.ReactElement
 }
 
-const AuthCard: React.FC<AuthCardProps> = ({ mode, children }) => {
-  const isLogin = mode === "login"
-  const title = isLogin ? "Login" : "Register"
-
+const AuthCard: React.FC<AuthCardProps> = ({ title, children }) => {
   return (
     <div className="auth-page">
       <div className="auth-card">
@@ -24,7 +21,7 @@ const AuthCard: React.FC<AuthCardProps> = ({ mode, children }) => {
         {children}
 
         <div className="auth-toggle">
-          <AuthCardFooter mode={mode} />
+          <AuthCardFooter mode={title} />
         </div>
       </div>
     </div>

@@ -1,5 +1,7 @@
-const Login = () => {
-  return <div>Login</div>;
-};
+import AuthPageContent from "@/components/commons/AuthPageContent"
 
-export default Login;
+const Login = () => {
+  return <AuthPageContent mode="Login" />
+}
+
+export default Login

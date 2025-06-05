@@ -1,7 +1,7 @@
-import RegisterContent from "@/components/commons/RegisterContent"
+import AuthPageContent from "@/components/commons/AuthPageContent"
 
 const Register = () => {
-  return <RegisterContent />
+  return <AuthPageContent mode="Register" />
 }
 
 export default Register

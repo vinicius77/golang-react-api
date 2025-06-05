@@ -6,7 +6,7 @@ type AuthCardFooterProps = {
 }
 
 const AuthCardFooter = ({ mode }: AuthCardFooterProps) => {
-  if (mode === "login") {
+  if (mode === "Login") {
     return (
       <>
         Don't have an account?{" "}
