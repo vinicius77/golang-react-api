@@ -1,12 +1,7 @@
-import SignUpWithEmail from "@/components/commons/SignUpWithEmail";
+import RegisterContent from "@/components/commons/RegisterContent"
 
 const Register = () => {
-  return (
-    <div>
-      Register
-      <SignUpWithEmail />
-    </div>
-  );
-};
+  return <RegisterContent />
+}
 
-export default Register;
+export default Register
