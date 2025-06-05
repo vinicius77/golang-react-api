@@ -21,7 +21,6 @@ export const signInWithProvider = async (
 
   try {
     const result = await signInWithPopup(auth, providerInstance)
-    console.log({ result })
     return { result, error: null }
   } catch (err) {
     const error = err instanceof Error ? err : new Error("Unknown error")
