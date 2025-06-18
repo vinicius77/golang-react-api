@@ -1,22 +1,23 @@
-import { useState, useRef } from "react"
+import { useState, useRef } from "react";
 
-import DropdownItem from "@/components/commons/TopNavBar/DropdownItem"
+import DropdownItem from "@/components/commons/TopNavBar/DropdownItem";
+import Logout from "@/components/commons/Logout/Logout";
 
-import Arrow from "@/icons/arrow.svg?react"
-import Bolt from "@/icons/bolt.svg?react"
-import Chevron from "@/icons/chevron.svg?react"
-import Cog from "@/icons/cog.svg?react"
+import Arrow from "@/icons/arrow.svg?react";
+import Bolt from "@/icons/bolt.svg?react";
+import Chevron from "@/icons/chevron.svg?react";
+import Cog from "@/icons/cog.svg?react";
 
-import { CSSTransition } from "react-transition-group"
-import Logout from "../Logout"
+import { Link } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 
 function DropdownMenu() {
-  const [activeMenu, setActiveMenu] = useState("main")
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const [activeMenu, setActiveMenu] = useState("main");
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const mainMenuRef = useRef<HTMLDivElement>(null)
-  const settingsMenuRef = useRef<HTMLDivElement>(null)
-  const animalsMenuRef = useRef<HTMLDivElement>(null)
+  const mainMenuRef = useRef<HTMLDivElement>(null);
+  const settingsMenuRef = useRef<HTMLDivElement>(null);
+  const animalsMenuRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="dropdown" ref={dropdownRef}>
@@ -25,14 +26,12 @@ function DropdownMenu() {
         timeout={500}
         classNames="menu-primary"
         unmountOnExit
-        nodeRef={mainMenuRef} // pass nodeRef here
+        nodeRef={mainMenuRef}
       >
         <div className="menu" ref={mainMenuRef}>
           <DropdownItem leftIcon="🦧" onClick={setActiveMenu}>
-            My Profile
+            <Link to="/profile">My Profile</Link>
           </DropdownItem>
-
-          <Logout />
 
           <DropdownItem
             onClick={setActiveMenu}
@@ -50,6 +49,8 @@ function DropdownMenu() {
           >
             Animals
           </DropdownItem>
+
+          <Logout />
         </div>
       </CSSTransition>
 
@@ -113,7 +114,7 @@ function DropdownMenu() {
         </div>
       </CSSTransition>
     </div>
-  )
+  );
 }
 
-export default DropdownMenu
+export default DropdownMenu;
