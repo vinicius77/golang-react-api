@@ -18,6 +18,8 @@
 # cd client
 # yarn run dev
 
+# make <command> e.g. make go-watch
+
 migration:
 	@migrate create -ext sql -dir db/migrations $(filter-out $@,$(MAKECMDGOALS))
 
@@ -26,3 +28,7 @@ migrate-up:
 
 migrate-down:
 	@/usr/local/go/bin/go run db/migrations/main.go down
+
+# Install node + nodemon
+go-watch:
+	nodemon --watch './**/*.go' --signal SIGTERM --exec 'go' run main.go
